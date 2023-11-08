@@ -1,0 +1,135 @@
+.wrap{
+	/*background: gray ;*/
+	background: white ;
+	width:  98%;
+	height: 94%;
+	margin: 10px auto;
+}
+
+/*bagian header*/
+.wrap .header{
+	/* background: grey ;
+	color: whitesmoke;	
+	padding: 2px 10px; */
+	/*height: 50px;*/
+
+	color : whitesmoke ;
+	/* background-color: black; */
+  background-image: url("../../../images/hitam.jpg");	    
+     /* -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover; */
+    background-size: cover;
+
+
+    border-radius: 15px ;
+    border-bottom: 5px solid #F39C12;
+	border-top: 5px solid #F39C12;
+	border-left: 5px solid #F39C12;
+	border-right: 5px solid #F39C12;
+	padding: 25px 10px; 
+	height: 120px;  
+
+}/*akhir header*/
+
+/*bagian menu*/
+.wrap .menu{
+	background: rgb(36, 36, 34);
+}
+
+.wrap .menu ul{
+	padding: 0;
+	margin: 0;
+	background: honeydew;
+	overflow: hidden;
+}
+
+.wrap .menu ul li{
+	float: left;
+	list-style-type: none;
+	padding: 10px;
+}
+/*akhir menu*/
+
+
+.clear{
+	clear: both;
+}
+
+.badan{	
+		height: 92%;
+}
+/*bagian sidebar*/
+.wrap .badan .sidebar{	
+ 	margin-top:  10px ;	
+	padding-top:  10px ;		
+	/* background-color: #19B5FE; */
+	background-image: url("../../../images/sampingios.jpg");	         
+    /* background-size: cover; */
+    float: left;	
+    width: 20%;
+    border-radius: 20px;
+	height: 92%;
+	border-top: 5px solid #F39C12;
+	border-right: 2px solid #F39C12;
+	border-bottom: 5px solid #F39C12;
+	border-left: 5px solid #F39C12;
+}
+/*akhir sidebar*/
+
+
+.wrap .badan .content{
+	/* background: mediumaquamarine;
+	float: left;
+	height: 100%;
+	width: 80%;	 */
+	margin-top:  10px ;	
+	padding-top:  15px ;
+	float: left;
+	border-radius: 15px ;
+	/* background-color: #C5EFF7; */
+	background-image: url("../../../images/badanios.jpg");	         
+    /* background-size: cover; */
+	border-right: 5px solid #F39C12;
+	border-bottom: 5px solid #F39C12;
+	border-left: 3px solid #F39C12;
+	border-top: 5px solid #F39C12;
+    height: 92%;
+	width: 80%;	
+}
+
+.wrap .footercut{	
+	padding: 10px; 
+    margin: 10px;
+    color:black ;
+    font-size: 20px;
+     height: 10%; 
+}
+
+
+
+#simple {
+    margin: 0;
+    padding: 5px;
+    width: 140px;
+    border-radius: 5px;
+}
+
+#simple li {
+    background: linear-gradient(-45deg, #19B5FE, #005ddc);
+    border-bottom: 3px solid #000;
+    list-style: none;
+    padding: 0.9em;
+    text-align: center;
+    width: 100px;
+}
+#simple li:hover {
+    background: linear-gradient(-45deg, yellow, #5ca1ff);
+}
+
+#simple li a {
+    color: black;
+    display: block;
+    text-decoration: none;
+
+}

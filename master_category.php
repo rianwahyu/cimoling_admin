@@ -99,7 +99,7 @@
                     <div class="modal-body">
 
                         <input type="hidden" class="form-control" id="postType" name="postType" value="add">
-                        <input type="hidden" class="form-control" id="idKategori " name="idKategori">
+                        <input type="hidden" class="form-control" id="idKategori" name="idKategori">
 
                         <div class="form-group">
                             <label for="foodName">Nama Kategori</label>
@@ -162,6 +162,7 @@
                             <th class="text-center">NO</th>
                             <th class="text-center">Nama Kategori</th>
                             <th class="text-center">Deskripsi</th>
+                            <th class="text-center">Gambar</th>
                             <th class="text-center">Opsi</th>
                         </tr>
                     </thead>
@@ -170,13 +171,22 @@
                         var data = object.data;
                         var no = 1;
                         var img = "";
+                        var btnStatus = '';
                         for (var count = 0; count < data.length; count++) {
+                            //var imageKategori = "storage/" + data[count].foto;
+                            var imageUrl = '<img src="' + data[count].foto + '" style="width : 60px;" />';
+
+                            if (data[count].status == "active") {
+                                btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + '" data-remark="Sembunyikan menu" data-status="nonActive" class="btn btn-info btn-sm">Sembunyikan<a/>';
+                            } else {
+                                btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + ' data-remark="Tampilkan menu" data-status="active" class="btn btn-info btn-sm">Tampilkan<a/>';
+                            }
                             htmls += '<tr>';
                             htmls += '<td>' + no + '</td>';
                             htmls += '<td>' + data[count].namaKategori + '</td>';
                             htmls += '<td>' + data[count].deskripsiKategori + '</td>';
-
-                            htmls += '<td class="text-left"><a href="#" id="edit" data-toggle="modal" data-target="#modal-kategori" data-id_kategori="' + data[count].idKategori + '"  data-nama_kategori="' + data[count].namaKategori + '" data-deskripsi_kategori="' + data[count].deskripsiKategori + '" class="btn btn-info btn-sm">Edit</a> <a href="#" id="showDelete" data-material_id="' + data[count].materialID + '" data-material_public_name="' + data[count].materialPublicName + '" class="btn btn-danger btn-sm">Innactive<a/> </td>';
+                            htmls += '<td class="text-center">' + imageUrl + '</td>';
+                            htmls += '<td class="text-left"><a href="#" id="edit" data-toggle="modal" data-target="#modal-kategori" data-id_kategori="' + data[count].idKategori + '"  data-nama_kategori="' + data[count].namaKategori + '" data-deskripsi_kategori="' + data[count].deskripsiKategori + '" class="btn btn-primary btn-sm">Edit</a> ' + btnStatus + '  </td>';
                             htmls += '</tr>';
                             no++;
                         }
@@ -213,44 +223,53 @@
 
             },
             submitHandler: function() {
-                // let formData = new FormData();
-                // var fileUpload = $('#fileUpload').prop('files')[0];
-                // formData.append('fileUpload', fileUpload);
-                // formData.append('namaKategori', $('#namaKategori').val());
-                // formData.append('deskripsiKategori', $('#deskripsiKategori').val());
-                // formData.append('idKategori', $('#idKategori').val());
-                // formData.append('postType', $('#postType').val());
+                var username = "<?php echo $username ?>";
+                let formData = new FormData();
+                var fileUpload = $('#fileUpload').prop('files')[0];
+                formData.append('fileUpload', fileUpload);
+                formData.append('namaKategori', $('#namaKategori').val());
+                formData.append('deskripsiKategori', $('#deskripsiKategori').val());
+                formData.append('idKategori', $('#idKategori').val());
+                formData.append('postType', $('#postType').val());
+                formData.append('username', username);
 
-                // $.ajax({
-                //     url: "api/category/addCategory.php",
-                //     type: "POST",
-                //     data: formData,
-                //     cache: false,
-                //     processData: false,
-                //     contentType: false,
-                //     beforeSend: function() {
-                //         $('#loader').show();
-                //     },
-                //     success: function(result) {
-                //         $('#loader').hide();
-                //         /* var hasil = JSON.parse(result);
-                //         var success = hasil.success;
-                //         var message = hasil.message;
-                //         if (success == true) {
-                //             $('#form-add').get(0).reset()
-                //             $('#modal-add').modal('hide');
-                //             load_data();
+                var urls = '';
 
-                //         } else {
-                //             Swal.fire({
-                //                 title: 'Gagal',
-                //                 animation: true,
-                //                 text: message,
-                //                 type: "error",
-                //             });
-                //         } */
-                //     }
-                // });
+                if ($('#postType').val() == "add") {
+                    urls = "api/category/addCategory.php";
+                } else if ($('#postType').val() == "update") {
+                    urls = "api/category/updateCategory.php";
+                }
+                $.ajax({
+                    url: urls,
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        $('#loader').show();
+                    },
+                    success: function(result) {
+                        $('#loader').hide();
+                        var hasil = JSON.parse(result);
+                        var success = hasil.success;
+                        var message = hasil.message;
+                        if (success == true) {
+                            $('#form-kategori').get(0).reset()
+                            $('#modal-kategori').modal('hide');
+                            load_data();
+
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal',
+                                animation: true,
+                                text: message,
+                                type: "error",
+                            });
+                        }
+                    }
+                });
 
             },
             errorElement: 'span',
@@ -264,6 +283,79 @@
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
+        });
+
+
+        $(document).on('click', '#edit', function(e) {
+            e.preventDefault();
+            var id_kategori = $(this).data('id_kategori');
+            var nama_kategori = $(this).data('nama_kategori');
+            var deskripsi_kategori = $(this).data('deskripsi_kategori');
+            //$('#materialID').prop('readonly', true);
+            $('#postType').val("update");
+            $('#idKategori').val(id_kategori);
+            $('#namaKategori').val(nama_kategori);
+            $('#deskripsiKategori').val(deskripsi_kategori);
+            $("#titleForm").html('Form Edit Kategori');
+
+        });
+
+        $('#modal-kategori').on('hidden.bs.modal', function(e) {
+            $(this)
+                .find("input,textarea,select")
+                .val('')
+                .end()
+                .find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "")
+                .end();
+        })
+
+        $(document).on('click', '#showStatus', function(e) {
+            e.preventDefault();
+            var id_kategori = $(this).data('id_kategori');
+            var nama_kategori = $(this).data('nama_kategori');
+            var status = $(this).data('status');
+            var remark = $(this).data('remark');
+            Swal.fire({
+                title: remark,
+                text: "Apakah anda ingin " + remark + " " + nama_kategori + " ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "api/category/updateStatus.php",
+                        type: "POST",
+                        data: {
+                            idKategori: id_kategori,
+                            status: status,
+                        },
+
+                        beforeSend: function() {
+                            $('#loader').show();
+                        },
+                        success: function(result) {
+                            $('#loader').hide();
+
+                            Swal.fire(
+                                'Berhasil!',
+                                'Ubah Data Berhasil',
+                                'success'
+                            )
+                            load_data();
+
+                        }
+                    });
+                }
+            })
+        });
+
+        $(document).on('click', '#btnTambah', function(e) {
+            $("#titleForm").html('Form Tambah Kategori');
+            $('#postType').val("add");
         });
 
         /* var key = '';
@@ -297,51 +389,7 @@
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
-
         
-
-       
-
-
-        $(document).on('click', '#edit', function(e) {
-            e.preventDefault();
-            var material_id = $(this).data('material_id');
-            var material_name = $(this).data('material_name');
-            var material_public_name = $(this).data('material_public_name');
-            var material_price = $(this).data('material_price');
-            var material_uom = $(this).data('material_uom');
-            var material_color = $(this).data('material_color');
-            var supplier = $(this).data('supplier');
-            var materialtype = $(this).data('materialtype');
-            var tc = $(this).data('tc');
-            var weaving = $(this).data('weaving');
-            var konstruksi = $(this).data('konstruksi');
-            var yarncount = $(this).data('yarncount');
-            var lebar = $(this).data('lebar');
-            var berat = $(this).data('berat');
-
-
-            $('#materialID').prop('readonly', true);
-            $('#materialID').val(material_id);
-            $('#materialName').val(material_name);
-            $('#materialPublicName').val(material_public_name);
-            $('#materialPrice').val(material_price);
-            $('#materialUom').val(material_uom);
-            $('#materialColor').val(material_color);
-            $('#materialType').val(materialtype);
-
-            $('#supplier').val(supplier);
-            $('#tc').val(tc);
-            $('#weaving').val(weaving);
-            $('#konstruksi').val(konstruksi);
-            $('#yarnCount').val(yarncount);
-            $('#lebar').val(lebar);
-            $('#berat').val(berat);
-            $('#postType').val("update");
-            $("#titleForm").html('Form Edit Kain');
-
-        });
-
         $(document).on('click', '#btnTambah', function(e) {
             $("#titleForm").html('Form Tambah Kain');
             $('#postType').val("add");
@@ -357,47 +405,7 @@
                 .end();
         })
 
-        $(document).on('click', '#showDelete', function(e) {
-            e.preventDefault();
-            var material_id = $(this).data('material_id');
-            var material_public_name = $(this).data('material_public_name');
-            Swal.fire({
-                title: 'Hapus Data ?',
-                text: "Apakah anda ingin menghapus data " + material_public_name + " ?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus Data!'
-            }).then((result) => {
-
-
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "api/product/deleteMaterial.php",
-                        type: "POST",
-                        data: {
-                            materialID: material_id,
-                        },
-
-                        beforeSend: function() {
-                            $('#loader').show();
-                        },
-                        success: function(result) {
-                            $('#loader').hide();
-
-                            Swal.fire(
-                                'Terhapus!',
-                                'Data Berhasil dihapus',
-                                'success'
-                            )
-                            load_data();
-
-                        }
-                    });
-                }
-            })
-        }); */
+         */
     </script>
 
 </body>

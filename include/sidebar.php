@@ -52,29 +52,39 @@
               </a>
             </li>
 
-            <!-- <li class="nav-item">
-              <a href="sales_order" class="nav-link <?= ($subPage == "salesOrder") ? 'active' : '' ?>">
+            <li class="nav-item">
+              <a href="master_sub_category" class="nav-link <?= ($subPage == "masterSubCategory") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Order</p>
+                <p>Sub Kategori</p>
               </a>
             </li>
-
-            <li class="nav-item">
-              <a href="sales_platform" class="nav-link <?= ($subPage == "salesPlatform") ? 'active' : '' ?>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Platform</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="sales_channel" class="nav-link <?= ($subPage == "salesChannel") ? 'active' : '' ?>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Channel</p>
-              </a>
-            </li> -->
           </ul>
         </li>
+        
+        <li class="nav-item <?= ($page == "promosi") ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= ($page == "promosi") ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-circle"></i>
+            <p>
+              Promosi
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview active">
+            <li class="nav-item">
+              <a href="#" class="nav-link <?= ($subPage == "promosiBanner") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Banner Slider</p>
+              </a>
+            </li>
 
+            <li class="nav-item">
+              <a href="#" class="nav-link <?= ($subPage == "promosiNotifikasi") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Notifikasi</p>
+              </a>
+            </li>
+          </ul>
+        </li>
 
     </nav>
     <!-- /.sidebar-menu -->

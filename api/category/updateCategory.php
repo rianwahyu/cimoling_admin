@@ -2,7 +2,9 @@
 
 include '../../config/connection.php';
 
-$username = $_POST['username'];
+session_start();
+$username = $_SESSION['username'];
+
 $idKategori = $_POST['idKategori'];
 $namaKategori = $_POST['namaKategori'];
 $deskripsiKategori = $_POST['deskripsiKategori'];
@@ -54,7 +56,9 @@ if ($_FILES['fileUpload']['name'] != '') {
     $imageValueTable = "";
 }
 
-$query = "UPDATE `kategoriLayanan` SET `namaKategori`='$namaKategori',`deskripsiKategori`='$deskripsiKategori', `status`='$status',`modified_date`=NOW(),`_by`='$username', $imageValueTable WHERE idKategori='$idKategori' ";
+$query = "UPDATE `kategoriLayanan` SET `namaKategori`='$namaKategori',`deskripsiKategori`='$deskripsiKategori', `modified_date`=NOW(),`_by`='$username' $imageValueTable WHERE idKategori='$idKategori'";
+
+//echo $query;
 
 $result = mysqli_query($dbc, $query);
 if (mysqli_affected_rows($dbc) >= 1) {

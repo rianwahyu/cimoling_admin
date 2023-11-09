@@ -2,16 +2,17 @@
 
 include '../../config/connection.php';
 
-$idHarga = $_POST['idHarga'];
-$idSubKategori = $_POST['idSubKategori'];
-$keterangan = $_POST['keterangan'];
-$harga = $_POST['harga'];
-$status = $_POST['status'];
-$username = $_POST['username'];
+
+session_start();
+$username = $_SESSION['username'];
+
+$idJenis = $_POST['idJenis'];
+$idLayanan = $_POST['idLayanan'];
+$namaJenis = $_POST['namaJenis'];
 
 $response = array();
 
-$query = "UPDATE `subKategoriLayananHarga` SET `idSubKategori`='$idSubKategori',`keterangan`='$keterangan',`harga`='$harga', `status`='$status' ,`modified_date`=NOW(),`_by`='$username' WHERE idHarga='$idHarga' ";
+$query = "UPDATE `subKategoriLayanan` SET `idLayanan`='$idLayanan',`namaJenis`='$namaJenis', `modified_date`=NOW(),`_by`='$username' WHERE idJenis='$idJenis' ";
 
 //echo $query;
 $result = mysqli_query($dbc, $query);

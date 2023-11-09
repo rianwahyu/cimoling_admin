@@ -3,20 +3,23 @@
 include '../../config/connection.php';
 
 
-$idSubKategori = $_POST['idSubKategori'];
-
 $response = array();
-$query = "SELECT `idHarga`, `idSubKategori`, `keterangan`, `harga`, `status`, `modified_date`, `_by` FROM `subKategoriLayananHarga` WHERE idSubKategori='$idSubKategori' ";
+$query = "SELECT sk.idJenis, sk.idLayanan, k.namaKategori, sk.namaJenis, sk.status, sk.modified_date, sk._by 
+FROM `subKategoriLayanan` sk
+INNER JOIN kategoriLayanan k ON sk.idLayanan = k.idKategori ";
 $result = mysqli_query($dbc, $query);
 
+//echo $query;
+
+$urlImageContent = "https://demoapps.rigadevofc.com/storage/";
 if (mysqli_num_rows($result) >= 1) {
     while ($data = mysqli_fetch_assoc($result)) {
         //$myArray[]= $data;
         $myArray[] = array(
-            "idHarga" => $data['idHarga'],
-            "idSubKategori" => $data['idSubKategori'],
-            "keterangan" => $data['keterangan'],
-            "harga" => $data['harga'],
+            "idJenis" => $data['idJenis'],
+            "idLayanan" => $data['idLayanan'],
+            "namaKategori" => $data['namaKategori'],
+            "namaJenis" => $data['namaJenis'],
             "status" => $data['status'],
             "modified_date" => $data['modified_date'],
             "_by" => $data['_by'],

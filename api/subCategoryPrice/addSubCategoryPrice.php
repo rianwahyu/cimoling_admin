@@ -2,10 +2,13 @@
 
 include '../../config/connection.php';
 
+session_start();
+$username = $_SESSION['username'];
+
 $idSubKategori = $_POST['idSubKategori'];
 $keterangan = $_POST['keterangan'];
 $harga = $_POST['harga'];
-$username = $_POST['username'];
+
 
 $response = array();
 

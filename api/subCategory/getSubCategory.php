@@ -5,7 +5,10 @@ include '../../config/connection.php';
 $idLayanan = $_POST['idLayanan'];
 
 $response = array();
-$query = "SELECT `idJenis`, `idLayanan`, `namaJenis`, `status`, `modified_date`, `_by` FROM `subKategoriLayanan` WHERE idLayanan='$idLayanan' ";
+$query = "SELECT sk.idJenis, sk.idLayanan, k.namaKategori, sk.namaJenis, sk.status, sk.modified_date, sk._by 
+FROM `subKategoriLayanan` sk
+INNER JOIN kategoriLayanan k ON sk.idLayanan = k.idLayanan
+WHERE sk.idLayanan='$idLayanan' ";
 $result = mysqli_query($dbc, $query);
 
 $urlImageContent = "https://demoapps.rigadevofc.com/storage/";
@@ -15,6 +18,7 @@ if (mysqli_num_rows($result) >= 1) {
         $myArray[] = array(
             "idJenis" => $data['idJenis'],
             "idLayanan" => $data['idLayanan'],
+            "namaKategori" => $data['namaKategori'],
             "namaJenis" => $data['namaJenis'],
             "status" => $data['status'],
             "modified_date" => $data['modified_date'],

@@ -2,9 +2,11 @@
 
 include '../../config/connection.php';
 
+session_start();
+$username = $_SESSION['username'];
+
 $idLayanan = $_POST['idLayanan'];
 $namaJenis = $_POST['namaJenis'];
-$username = $_POST['username'];
 
 $response = array();
 

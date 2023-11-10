@@ -52,7 +52,7 @@ if ($_FILES['fileUpload']['name'] != '') {
     $imageValueTable = "";
 }
 
-$query = "UPDATE ara_content SET contentTitle ='$contentTitle',`contentValue`='$contentValue' $imageValueTable WHERE contentID='$contentID' ";
+$query = "UPDATE content SET contentTitle ='$contentTitle',`contentValue`='$contentValue' $imageValueTable WHERE contentID='$contentID' ";
 
 $result = mysqli_query($dbc, $query);
 if (mysqli_affected_rows($dbc) >= 1) {

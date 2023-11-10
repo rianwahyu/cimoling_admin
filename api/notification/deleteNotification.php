@@ -2,9 +2,9 @@
 
 include '../../config/connection.php';
 
-$contentID = $_POST['contentID'];
+$idNotifikasi = $_POST['idNotifikasi'];
 
-$query = "DELETE FROM `content` WHERE contentID='$contentID'";
+$query = "DELETE FROM `notifikasi` WHERE idNotifikasi='$idNotifikasi'";
 $result = mysqli_query($dbc, $query);
 if(mysqli_affected_rows($dbc)>0){
     $response = array(

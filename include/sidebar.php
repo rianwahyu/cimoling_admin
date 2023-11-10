@@ -36,6 +36,61 @@
         </li>
 
         
+        <li class="nav-item <?= ($page == "order") ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= ($page == "order") ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-circle"></i>
+            <p>
+              Order
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview active">
+            <li class="nav-item">
+              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Order Masuk</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Order Proses</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Order Konfirmasi</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Order Perjalanan</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Order Selesai</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="promosi_notifikasi" class="nav-link <?= ($subPage == "promosiNotifikasi") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Order Dibatalkan</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+
         <li class="nav-item <?= ($page == "master") ? 'menu-open' : '' ?>">
           <a href="#" class="nav-link <?= ($page == "master") ? 'active' : '' ?>">
             <i class="nav-icon fas fa-circle"></i>
@@ -60,7 +115,7 @@
             </li>
           </ul>
         </li>
-        
+
         <li class="nav-item <?= ($page == "promosi") ? 'menu-open' : '' ?>">
           <a href="#" class="nav-link <?= ($page == "promosi") ? 'active' : '' ?>">
             <i class="nav-icon fas fa-circle"></i>
@@ -71,14 +126,14 @@
           </a>
           <ul class="nav nav-treeview active">
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "promosiBanner") ? 'active' : '' ?>">
+              <a href="promosi_banner" class="nav-link <?= ($subPage == "promosiBanner") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Banner Slider</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "promosiNotifikasi") ? 'active' : '' ?>">
+              <a href="promosi_notifikasi" class="nav-link <?= ($subPage == "promosiNotifikasi") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Notifikasi</p>
               </a>

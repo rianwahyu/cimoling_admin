@@ -3,19 +3,18 @@
 include '../../config/connection.php';
 
 $response = array();
-$query = "SELECT * FROM content";
+$query = "SELECT * FROM notifikasi  ";
 $result = mysqli_query($dbc, $query);
 
-$urlImageContent = "https://demoapps.rigadevofc.com/cimoling/storage/";
+
 if (mysqli_num_rows($result) >= 1) {
     while ($data = mysqli_fetch_assoc($result)) {
         //$myArray[]= $data;
         $myArray[] = array(
-            "contentID" => $data['contentID'],
-            "contentTitle" => $data['contentTitle'],
-            "contentValue" => $data['contentValue'],
-            "contentImage" => $urlImageContent . $data['contentImage'],
-            "dateCreate" => $data['dateCreate'],
+            "idNotifikasi" => $data['idNotifikasi'],
+            "judul" => $data['judul'],
+            "deskripsiSingkat" => $data['deskripsiSingkat'],
+            "pesan" => $data['pesan'],
         );
     }
 

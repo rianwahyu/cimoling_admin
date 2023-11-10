@@ -24,7 +24,7 @@ if ($_FILES['fileUpload']['name'] != '') {
             $path = $temp . $name;
             if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"], $path)) {
 
-                $query = "INSERT INTO `ara_content`(`contentTitle`, `contentImage`, `contentValue`, `dateCreate`) VALUES ('$contentTitle','$name','$contentValue', NOW()) ";
+                $query = "INSERT INTO `content`(`contentTitle`, `contentImage`, `contentValue`, `dateCreate`) VALUES ('$contentTitle','$name','$contentValue', NOW()) ";
 
                 //echo $query;
                 $result = mysqli_query($dbc, $query);

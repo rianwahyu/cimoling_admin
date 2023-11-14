@@ -4,5 +4,5 @@ session_start();
 
 session_destroy();
 
-header("location:../../sign?message=logout");
+header("location:../sign?message=logout");
 ?>

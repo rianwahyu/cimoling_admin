@@ -56,7 +56,7 @@
             <span class="float-right text-muted text-sm">12 hours</span>
           </a> -->
           <div class="dropdown-divider"></div>
-          <a href="config/web/check_logout" class="dropdown-item">
+          <a href="config/check_logout.php" class="dropdown-item">
             <i class="fas fa-sign-out-alt"></i> Logout
             <span class="float-right text-muted text-sm"></span>
           </a>

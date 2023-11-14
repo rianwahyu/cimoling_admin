@@ -8,8 +8,8 @@
 
         <!-- Main Sidebar Container -->
         <?php
-        $page = "promosi";
-        $subPage = "promosiBanner";
+        $page = "order";
+        $subPage = "orderIn";
         include 'include/sidebar.php'; ?>
 
 
@@ -20,12 +20,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Banner Slider</h1>
+                            <h1>Order Masuk</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Promosi</a></li>
-                                <li class="breadcrumb-item active">Banner Slider</li>
+                                <li class="breadcrumb-item"><a href="#">Order</a></li>
+                                <li class="breadcrumb-item active">Order Masuk</li>
                             </ol>
                         </div>
                     </div>
@@ -40,9 +40,9 @@
                         <div class="col-sm-12 col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Banner Slider</h3>
+                                    <h3 class="card-title">Daftar Order Masuk</h3>
                                     <br>
-                                    <button type="button" id="btnTambah" class="btn  btn-outline-info" data-toggle="modal" data-target="#modal-banner">Tambah Banner</button>
+                                    <!-- <button type="button" id="btnTambah" class="btn  btn-outline-info" data-toggle="modal" data-target="#modal-kategori">Tambah Kategori</button> -->
 
                                     <!-- <div class="card-tools">
                                         <div class="input-group input-group-sm" style="width: 180px;">
@@ -57,7 +57,7 @@
 
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body table-responsive" id="dataBanner">
+                                <div class="card-body table-responsive" id="dataKategori">
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -82,11 +82,11 @@
     </div>
     <!-- ./wrapper -->
 
-    <div class="modal fade" id="modal-banner">
+    <div class="modal fade" id="modal-kategori">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="titleForm">Form Tambah Banner</h4>
+                    <h4 class="modal-title" id="titleForm">Form Tambah Kategori</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -94,26 +94,26 @@
                 <div class="overlay" style="display: none" id="overlayKategori">
                     <i class="fas fa-2x fa-sync fa-spin"></i>
                 </div>
-                <form role="form" action="" id="form-banner" name="form-banner" method="POST">
+                <form role="form" action="" id="form-kategori" name="form-kategori" method="POST">
 
                     <div class="modal-body">
 
                         <input type="hidden" class="form-control" id="postType" name="postType" value="add">
-                        <input type="hidden" class="form-control" id="contentID" name="contentID">
+                        <input type="hidden" class="form-control" id="idKategori" name="idKategori">
 
                         <div class="form-group">
-                            <label for="foodName">Gambar Banner</label>
+                            <label for="foodName">Nama Kategori</label>
+                            <input type="text" class="form-control" id="namaKategori" name="namaKategori">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="foodName">Deskripsi Kategori</label>
+                            <input type="text" class="form-control" id="deskripsiKategori" name="deskripsiKategori">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="foodName">Gambar Kategori</label>
                             <input type="file" class="form-control" id="fileUpload" name="fileUpload">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="foodName">Nama Banner</label>
-                            <input type="text" class="form-control" id="contentTitle" name="contentTitle">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="foodName">Deskripsi Banner</label>
-                            <textarea id="contentValue" name="contentValue" class="ml-10 mr-10"></textarea>
                         </div>
 
                     </div>
@@ -132,17 +132,11 @@
 
     <!-- Page specific script -->
     <script text="text/javascript">
-        $('#contentValue').summernote({
-            height: 200,
-            focus: true
-        })
-
-
         load_data();
 
         function load_data(key) {
             $.ajax({
-                url: "api/content/getContent.php",
+                url: "api/category/getCategory.php",
                 method: "POST",
                 data: {
                     // postType: 'getData',
@@ -166,7 +160,7 @@
                     <thead>
                         <tr class="">
                             <th class="text-center">NO</th>
-                            <th class="text-center">Nama Banner</th>
+                            <th class="text-center">Nama Kategori</th>
                             <th class="text-center">Deskripsi</th>
                             <th class="text-center">Gambar</th>
                             <th class="text-center">Opsi</th>
@@ -180,48 +174,51 @@
                         var btnStatus = '';
                         for (var count = 0; count < data.length; count++) {
                             //var imageKategori = "storage/" + data[count].foto;
-                            var imageUrl = '<img src="' + data[count].contentImage + '" style="width : 100px;" />';
+                            var imageUrl = '<img src="' + data[count].foto + '" style="width : 60px;" />';
 
-                            btnStatus = '<a href="#" id="showDelete" data-content_id ="' + data[count].contentID  + '" data-content_title="' + data[count].contentTitle + '" data-content_value="'+data[count].contentValue+'" class="btn btn-danger btn-sm">Hapus<a/>';
-
+                            if (data[count].status == "active") {
+                                btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + '" data-remark="Sembunyikan menu" data-status="nonActive" class="btn btn-info btn-sm">Sembunyikan<a/>';
+                            } else {
+                                btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + ' data-remark="Tampilkan menu" data-status="active" class="btn btn-info btn-sm">Tampilkan<a/>';
+                            }
                             htmls += '<tr>';
                             htmls += '<td>' + no + '</td>';
-                            htmls += '<td>' + data[count].contentTitle + '</td>';
-                            htmls += '<td>' + data[count].contentValue + '</td>';
+                            htmls += '<td>' + data[count].namaKategori + '</td>';
+                            htmls += '<td>' + data[count].deskripsiKategori + '</td>';
                             htmls += '<td class="text-center">' + imageUrl + '</td>';
-                            htmls += '<td class="text-left"><a href="#" id="edit" data-toggle="modal" data-target="#modal-banner" data-content_id="' + data[count].contentID  + '" data-content_title="' + data[count].contentTitle + '" data-content_value="'+data[count].contentValue+'" class="btn btn-primary btn-sm">Edit</a> ' + btnStatus + '  </td>';
+                            htmls += '<td class="text-left"><a href="#" id="edit" data-toggle="modal" data-target="#modal-kategori" data-id_kategori="' + data[count].idKategori + '"  data-nama_kategori="' + data[count].namaKategori + '" data-deskripsi_kategori="' + data[count].deskripsiKategori + '" class="btn btn-primary btn-sm">Edit</a> ' + btnStatus + '  </td>';
                             htmls += '</tr>';
                             no++;
                         }
 
                         htmls += `</tbody>
                   </table>`;
-                        $("#dataBanner").html(htmls);
+                        $("#dataKategori").html(htmls);
                     } else {
                         htmls += `<h4>Data tidak ditemukan  </h4>`;
-                        $("#dataBanner").html(htmls);
+                        $("#dataKategori").html(htmls);
                     }
 
                 }
             })
         }
 
-        $('#form-banner').validate({
+        $('#form-kategori').validate({
             rules: {
-                contentTitle: {
+                namaKategori: {
                     required: true,
                 },
-                contentValue: {
+                deskripsiKategori: {
                     required: true,
                 },
             },
             messages: {
-                contentTitle: {
-                    required: "Mohon mengisi nama banner",
+                namaKategori: {
+                    required: "Mohon mengisi nama kategori",
                 },
 
-                contentValue: {
-                    required: "Mohon mengisi konten",
+                deskripsiKategori: {
+                    required: "Mohon mengisi nama deskripsi kategori",
                 },
 
             },
@@ -230,18 +227,18 @@
                 let formData = new FormData();
                 var fileUpload = $('#fileUpload').prop('files')[0];
                 formData.append('fileUpload', fileUpload);
-                formData.append('contentID', $('#contentID').val());
-                formData.append('contentTitle', $('#contentTitle').val());
-                formData.append('contentValue', $('#contentValue').val());
+                formData.append('namaKategori', $('#namaKategori').val());
+                formData.append('deskripsiKategori', $('#deskripsiKategori').val());
+                formData.append('idKategori', $('#idKategori').val());
                 formData.append('postType', $('#postType').val());
                 formData.append('username', username);
 
                 var urls = '';
 
                 if ($('#postType').val() == "add") {
-                    urls = "api/content/addContent.php";
+                    urls = "api/category/addCategory.php";
                 } else if ($('#postType').val() == "update") {
-                    urls = "api/content/updateContent.php";
+                    urls = "api/category/updateCategory.php";
                 }
                 $.ajax({
                     url: urls,
@@ -259,8 +256,8 @@
                         var success = hasil.success;
                         var message = hasil.message;
                         if (success == true) {
-                            $('#form-banner').get(0).reset()
-                            $('#modal-banner').modal('hide');
+                            $('#form-kategori').get(0).reset()
+                            $('#modal-kategori').modal('hide');
                             load_data();
 
                         } else {
@@ -291,21 +288,19 @@
 
         $(document).on('click', '#edit', function(e) {
             e.preventDefault();
-            var content_id = $(this).data('content_id');
-            var content_title = $(this).data('content_title');
-            var content_value = $(this).data('content_value');
-
-            console.log("IDnya " +content_id)
+            var id_kategori = $(this).data('id_kategori');
+            var nama_kategori = $(this).data('nama_kategori');
+            var deskripsi_kategori = $(this).data('deskripsi_kategori');
             //$('#materialID').prop('readonly', true);
             $('#postType').val("update");
-            $('#contentID').val(content_id);
-            $('#contentTitle').val(content_title);            
-            $("#contentValue").summernote('code', content_value);
-            $("#titleForm").html('Form Edit Banner');
+            $('#idKategori').val(id_kategori);
+            $('#namaKategori').val(nama_kategori);
+            $('#deskripsiKategori').val(deskripsi_kategori);
+            $("#titleForm").html('Form Edit Kategori');
 
         });
 
-        $('#modal-banner').on('hidden.bs.modal', function(e) {
+        $('#modal-kategori').on('hidden.bs.modal', function(e) {
             $(this)
                 .find("input,textarea,select")
                 .val('')
@@ -315,26 +310,28 @@
                 .end();
         })
 
-        $(document).on('click', '#showDelete', function(e) {
+        $(document).on('click', '#showStatus', function(e) {
             e.preventDefault();
-            var content_id = $(this).data('content_id');
-            var content_title = $(this).data('content_title');
-
+            var id_kategori = $(this).data('id_kategori');
+            var nama_kategori = $(this).data('nama_kategori');
+            var status = $(this).data('status');
+            var remark = $(this).data('remark');
             Swal.fire({
-                title: "Hapus Data",
-                text: "Apakah anda ingin  menghapus " + content_title + " ?",
+                title: remark,
+                text: "Apakah anda ingin " + remark + " " + nama_kategori + " ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Hapus Data'
+                confirmButtonText: 'Ya'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "api/content/deleteContent.php",
+                        url: "api/category/updateStatus.php",
                         type: "POST",
                         data: {
-                            contentID: content_id,                            
+                            idKategori: id_kategori,
+                            status: status,
                         },
 
                         beforeSend: function() {
@@ -357,7 +354,7 @@
         });
 
         $(document).on('click', '#btnTambah', function(e) {
-            $("#titleForm").html('Form Tambah Banner');
+            $("#titleForm").html('Form Tambah Kategori');
             $('#postType').val("add");
         });
 

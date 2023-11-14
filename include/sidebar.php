@@ -35,7 +35,6 @@
           </a>
         </li>
 
-        
         <li class="nav-item <?= ($page == "order") ? 'menu-open' : '' ?>">
           <a href="#" class="nav-link <?= ($page == "order") ? 'active' : '' ?>">
             <i class="nav-icon fas fa-circle"></i>
@@ -90,6 +89,12 @@
           </ul>
         </li>
 
+        <li class="nav-item">
+          <a href="member" class="nav-link <?= ($page == "member") ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-users"></i>
+            <p>Member</p>
+          </a>
+        </li>
 
         <li class="nav-item <?= ($page == "master") ? 'menu-open' : '' ?>">
           <a href="#" class="nav-link <?= ($page == "master") ? 'active' : '' ?>">
@@ -138,6 +143,46 @@
                 <p>Notifikasi</p>
               </a>
             </li>
+          </ul>
+        </li>
+
+        <li class="nav-item <?= ($page == "utility") ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= ($page == "utility") ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-circle"></i>
+            <p>
+              Pengaturan
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview active">
+            <li class="nav-item">
+              <a href="utility_app_setting" class="nav-link <?= ($subPage == "utilityAboutApps") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tentang Aplikasi</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="utility_app_use" class="nav-link <?= ($subPage == "utilityCara") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Cara Penggunaan</p>
+              </a>
+            </li>
+
+
+            <li class="nav-item">
+              <a href="utility_visi_misi" class="nav-link <?= ($subPage == "utilityVisiMisi") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Visi dan Misi</p>
+              </a>
+            </li>
+
+            <!-- <li class="nav-item">
+              <a href="master_sub_category" class="nav-link <?= ($subPage == "masterSubCategory") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Sub Kategori</p>
+              </a>
+            </li> -->
           </ul>
         </li>
 

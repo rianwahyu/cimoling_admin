@@ -156,7 +156,7 @@
                     var success = object.success;
 
                     if (success == true) {
-                        htmls += `<table class="table table-bordered table-striped p-10">
+                        htmls += `<table class="table table-bordered table-sm table-striped p-10">
                     <thead>
                         <tr class="">
                             <th class="text-center">NO</th>

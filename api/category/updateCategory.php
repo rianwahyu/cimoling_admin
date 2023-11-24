@@ -16,16 +16,18 @@ $imageValueTable = '';
 $temp = "../../storage/";
 
 if ($_FILES['fileUpload']['name'] != '') {
+    //echo "ada";
     $allowed_ext = array(
         "jpg",
         "png",
         "jpeg",
-        "JPG"
+        "JPG",
+        "avif",
     );
 
     $ext = end(explode('.', $_FILES['fileUpload']['name']));
     if (in_array($ext, $allowed_ext)) {
-        if ($_FILES["fileUpload"]["size"] < 2000000) {
+        if ($_FILES["fileUpload"]["size"] < 5000000) {
             $name = time() . '.' . $ext;
             $path = $temp . $name;
 
@@ -37,6 +39,7 @@ if ($_FILES['fileUpload']['name'] != '') {
                     "success" => false,
                     "message" => "Gagal di upload !",
                 );
+                die(json_encode($response));
             }
         } else {
             $imageValueTable = "";
@@ -44,6 +47,7 @@ if ($_FILES['fileUpload']['name'] != '') {
                 "success" => false,
                 "message" => "Maksimal ukuran file 2MB !",
             );
+            die(json_encode($response));
         }
     } else {
         $imageValueTable = "";
@@ -51,10 +55,14 @@ if ($_FILES['fileUpload']['name'] != '') {
             "success" => false,
             "message" => "Format file tidak sesuai",
         );
+        die(json_encode($response));
     }
 } else {
+    //echo "tdk ada";
     $imageValueTable = "";
 }
+
+//echo $imageValueTable;
 
 $query = "UPDATE `kategoriLayanan` SET `namaKategori`='$namaKategori',`deskripsiKategori`='$deskripsiKategori', `modified_date`=NOW(),`_by`='$username' $imageValueTable WHERE idKategori='$idKategori'";
 
@@ -66,11 +74,12 @@ if (mysqli_affected_rows($dbc) >= 1) {
         "success" => true,
         "message" => "Data berhasil dirubah",
     );
+    die(json_encode($response));
 } else {
     $response = array(
         "success" => false,
         "message" => "Tidak ada perubahan data",
     );
+    die(json_encode($response));
 }
 
-die(json_encode($response));

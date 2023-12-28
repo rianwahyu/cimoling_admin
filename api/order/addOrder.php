@@ -49,9 +49,6 @@ if (mysqli_multi_query($dbc, $query)) {
         "success" => true,
         "message" => "Sukses Order Layanan"
     );
-
-    //sendNotif();
-
 } else {
     $response = array(
         "success" => false,

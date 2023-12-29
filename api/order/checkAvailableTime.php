@@ -20,7 +20,14 @@ if (mysqli_num_rows($result) > 0) {
         "orderID" => "",
     );
 } else {
-    $orderID = getOrderID($dbc);
+    
+    $response = array(
+        "success" => true,
+        "message" => "Tersedia",
+        "orderID" => "",
+    );
+
+    /* $orderID = getOrderID($dbc);
 
     $query = "";
     $query = $query . " INSERT INTO `booking`(`orderID`, `userID`, `idKategori`, `tanggalOrder`, `waktuOrder`, `statusOrder`) VALUES ('$orderID', '$userID', '$idKategori', '$orderDate', '$timeOrder', '0'); ";
@@ -39,7 +46,7 @@ if (mysqli_num_rows($result) > 0) {
             "message" => "Gagal",
             "orderID" => "",
         );
-    }
+    } */
 }
 
 die(json_encode($response));

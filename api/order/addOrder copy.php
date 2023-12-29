@@ -2,7 +2,7 @@
 
 include '../../config/connection.php';
 
-/* $kode = "CML";
+$kode = "CML";
 $orderID = "";
 $sql = "SELECT orderID  FROM booking ORDER BY orderID DESC LIMIT 1 ";
 $res  = mysqli_query($dbc, $sql);
@@ -13,7 +13,7 @@ if (mysqli_num_rows($res) < 1) {
     $id = $data["orderID"];
     $id = substr($id, 3);
     $orderID = $kode . str_pad($id + 1, 7, 0, STR_PAD_LEFT);
-} */
+}
 
 //echo $orderID;
 
@@ -29,9 +29,12 @@ $longitude = $_POST['longitude'];
 $tglOrder = $_POST['tanggalOrder'];
 $waktuOrder = $_POST['waktuOrder'];
 
-//$tanggalOrder = date("Y-m-d", strtotime($tglOrder));
 
-$orderID = getOrderID($dbc);
+$tanggalOrder = date("Y-m-d", strtotime($tglOrder));
+
+// $tanggalOrder = date('Y-m-d');
+// $waktuOrder = ('H:i:s');
+
 $curDate = date('Y-m-d h:i:s');
 
 $query = "";
@@ -44,7 +47,7 @@ $response = array();
 if (mysqli_multi_query($dbc, $query)) {
     $response = array(
         "success" => true,
-        "message" => "ORDER ID Anda $orderID"
+        "message" => "Sukses Order Layanan"
     );
 } else {
     $response = array(
@@ -54,25 +57,6 @@ if (mysqli_multi_query($dbc, $query)) {
 }
 
 die(json_encode($response));
-
-
-function getOrderID($dbc)
-{
-    $kode = "CML";
-    $orderID = "";
-    $sql = "SELECT orderID  FROM booking ORDER BY orderID DESC LIMIT 1 ";
-    $res  = mysqli_query($dbc, $sql);
-    $data = mysqli_fetch_assoc($res);
-    if (mysqli_num_rows($res) < 1) {
-        $orderID = $kode . "0000001";
-    } else {
-        $id = $data["orderID"];
-        $id = substr($id, 3);
-        $orderID = $kode . str_pad($id + 1, 7, 0, STR_PAD_LEFT);
-    }
-
-    return $orderID;
-}
 
 function sendNotif()
 {

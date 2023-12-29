@@ -36,7 +36,7 @@ $curDate = date('Y-m-d h:i:s');
 
 $query = "";
 $query = $query . " INSERT INTO `booking`(`orderID`, `userID`, `tipeKendaraan`, `idKategori`, `idJenis`, `idHarga`, `alamatOrder`, `latitude`, `longitude`, `tanggalOrder`, `waktuOrder`, `statusOrder`) 
-VALUES ('$orderID', '$userID', '$tipeKendaraan', '$idKategori', '$idJenis', '$idHarga', '$alamatOrder', '$latitude', '$longitude', '$tanggalOrder', '$waktuOrder', '0') ;";
+VALUES ('$orderID', '$userID', '$tipeKendaraan', '$idKategori', '$idJenis', '$idHarga', '$alamatOrder', '$latitude', '$longitude', '$tglOrder', '$waktuOrder', '0') ;";
 
 $query = $query . " INSERT INTO `bookingValue`( `orderID`, `keterangan`, `status`, `tanggalValue`, `userAdmin`) VALUES ('$orderID', 'Pesanan telah dibuat', '0', '$curDate', '' ) ;";
 

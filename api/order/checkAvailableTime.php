@@ -1,7 +1,6 @@
 <?php
 
 include '../../config/connection.php';
-
 $orderDate = $_POST['orderDate'];
 $timeOrder = $_POST['timeOrder'];
 $userID = $_POST['userID'];
@@ -13,14 +12,12 @@ $response = array();
 $sql = "SELECT * FROM booking WHERE tanggalOrder='$orderDate' AND waktuOrder='$timeOrder'";
 $result = mysqli_query($dbc, $sql);
 if (mysqli_num_rows($result) > 0) {
-
     $response = array(
         "success" => false,
         "message" => "Tanggal atau waktu order tidak tersedia",
         "orderID" => "",
     );
 } else {
-    
     $response = array(
         "success" => true,
         "message" => "Tersedia",
@@ -28,7 +25,6 @@ if (mysqli_num_rows($result) > 0) {
     );
 
     /* $orderID = getOrderID($dbc);
-
     $query = "";
     $query = $query . " INSERT INTO `booking`(`orderID`, `userID`, `idKategori`, `tanggalOrder`, `waktuOrder`, `statusOrder`) VALUES ('$orderID', '$userID', '$idKategori', '$orderDate', '$timeOrder', '0'); ";
 
@@ -47,6 +43,7 @@ if (mysqli_num_rows($result) > 0) {
             "orderID" => "",
         );
     } */
+
 }
 
 die(json_encode($response));

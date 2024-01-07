@@ -124,7 +124,8 @@
 
                             <div class="form-group col-6">
                                 <label for="">Waktu Order</label>
-                                <input class="form-control" type="time" id="waktuUbahJadwal" name="waktuUbahJadwal">
+                                <!-- <input class="form-control" type="time" id="waktuUbahJadwal" name="waktuUbahJadwal"> -->
+                                <select class="form-control" name="waktuUbahJadwal" id="waktuUbahJadwal"></select>
                             </div>
 
                         </div>
@@ -148,11 +149,11 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-order">
+    <div class="modal fade" id="modal-confirm">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="titleForm">Proses Order</h4>
+                    <h4 class="modal-title" id="titleForm">Konfirmasi Order</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -160,14 +161,14 @@
                 <div class="overlay" style="display: none" id="overlayOrder">
                     <i class="fas fa-2x fa-sync fa-spin"></i>
                 </div>
-                <form role="form" action="" id="form-order" name="form-order" method="POST">
+                <form role="form" action="" id="form-confirm" name="form-confirm" method="POST">
 
                     <div class="modal-body">
 
                         <!-- <input type="hidden" class="form-control" id="postType" name="postType" value="add"> -->
-                        <input type="text" class="form-control" id="orderID" name="orderID">
+                        <input type="hidden" class="form-control" id="orderIDConfirm" name="orderIDConfirm">
 
-                        <h3>Apakah anda ingin memproses Order terpilih ?</h3>
+                        <h3>Apakah anda ingin mengkonfirmasi layanan Order terpilih ?</h3>
 
                     </div>
 
@@ -180,6 +181,41 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-cancel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="titleForm">Cancel Order</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="overlay" style="display: none" id="overlayJadwal">
+                    <i class="fas fa-2x fa-sync fa-spin"></i>
+                </div>
+                <form role="form" action="" id="form-cancel" name="form-cancel" method="POST">
+
+                    <div class="modal-body">
+
+
+                        <div class="form-group">
+                            <label for="">Alasan Cancel Order</label>
+                            <textarea class="form-control" name="reasonCancel" id="reasonCancel" rows="3"></textarea>
+                        </div>
+
+                        <!-- <input type="hidden" class="form-control" id="postType" name="postType" value="add"> -->
+                        <input type="hidden" class="form-control" id="orderIDCancel" name="orderIDCancel">
+
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batalkan</button>
+                        <button class="btn btn-primary">Cancel Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <?php include 'include/footer_jquery.php'; ?>
 
@@ -241,7 +277,7 @@
                             htmls += '<td class="text-wrap">' + data[count].alamatOrder + '</td>';
                             htmls += '<td>' + data[count].harga + '</td>';
 
-                            htmls += '<td class="text-left text-nowrap"><a href="#" id="jadwal" data-toggle="modal" data-target="#modal-jadwal" data-order_id="' + data[count].orderID + '" data-tanggal_order="' + data[count].tanggalOrder + '" data-waktu_order="' + data[count].waktuOrder + '" class="btn btn-info btn-sm">Ubah Jadwal</a> &nbsp <a href="#" id="edit" data-toggle="modal" data-target="#modal-confirm" data-order_id="' + data[count].orderID + '" class="btn btn-primary btn-sm">Konfirmasi</a> &nbsp <a href="#" id="edit" data-toggle="modal" data-target="#modal-cancel" data-order_id="' + data[count].orderID + '" class="btn btn-danger btn-sm">Batalkan</a> </td>';
+                            htmls += '<td class="text-left text-nowrap"><a href="#" id="jadwal" data-toggle="modal" data-target="#modal-jadwal" data-order_id="' + data[count].orderID + '" data-tanggal_order="' + data[count].tanggalOrder + '" data-waktu_order="' + data[count].waktuOrder + '" class="btn btn-info btn-sm">Ubah Jadwal</a> &nbsp <a href="#" id="confirm" data-toggle="modal" data-target="#modal-confirm" data-order_id="' + data[count].orderID + '" class="btn btn-primary btn-sm">Konfirmasi</a> &nbsp <a href="#" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-order_id="' + data[count].orderID + '" class="btn btn-danger btn-sm">Batalkan</a> </td>';
 
                             htmls += '</tr>';
                             no++;
@@ -355,7 +391,6 @@
             }
         });
 
-
         $(document).on('click', '#jadwal', function(e) {
             e.preventDefault();
             var order_id = $(this).data('order_id');
@@ -370,25 +405,177 @@
 
         });
 
-
-        $(document).on('click', '#edit', function(e) {
+        $(document).on('click', '#confirm', function(e) {
             e.preventDefault();
             var order_id = $(this).data('order_id');
-            $('#orderID').val(order_id);
+            $('#orderIDConfirm').val(order_id);
+        });
+
+        $('#form-confirm').validate({
+            rules: {
+
+
+            },
+            messages: {
+                // tanggalUbahJadwal: {
+                //     required: "Mohon mengisi tanggal",
+                // },
+            },
+            submitHandler: function() {
+                let formData = new FormData();
+
+                formData.append('orderID', $('#orderIDConfirm').val());
+                formData.append('username', idAdmin);
+                formData.append('status', "1");
+                formData.append('ketProses', "confirm");
+
+                var urls = 'api/order/updateOrderAdmin.php';
+
+                $.ajax({
+                    url: urls,
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        $('#overlayConfirm').show();
+                    },
+                    success: function(result) {
+                        $('#overlayConfirm').hide();
+                        var hasil = JSON.parse(result);
+                        var success = hasil.success;
+                        var message = hasil.message;
+                        if (success == true) {
+                            $('#form-confirm').get(0).reset()
+                            $('#modal-confirm').modal('hide');
+
+                            Swal.fire({
+                                title: 'Sukses',
+                                animation: true,
+                                text: message,
+                                type: "success",
+                            }).then(function() {
+                                load_data();
+                            });
+
+                            //load_data();
+
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal',
+                                animation: true,
+                                text: message,
+                                type: "error",
+                            });
+                        }
+                    }
+                });
+
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+
+        $(document).on('click', '#cancel', function(e) {
+            e.preventDefault();
+            var order_id = $(this).data('order_id');
+            $('#orderIDCancel').val(order_id);
+        });
+
+        $('#form-cancel').validate({
+            rules: {
+                reasonCancel: {
+                    required: true,
+                },
+
+            },
+            messages: {
+                reasonCancel: {
+                    required: "Mohon mengisi alasan cancel order layanan",
+                },
+
+            },
+            submitHandler: function() {
+                let formData = new FormData();
+
+                formData.append('orderID', $('#orderIDCancel').val());
+                formData.append('username', idAdmin);
+                formData.append('status', "1");
+                formData.append('ketProses', "cancel");
+                formData.append('reasonCancel', $('#reasonCancel').val());
+
+                var urls = 'api/order/updateOrderAdmin.php';
+
+                $.ajax({
+                    url: urls,
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        $('#overlayOrder').show();
+                    },
+                    success: function(result) {
+                        $('#overlayOrder').hide();
+                        var hasil = JSON.parse(result);
+                        var success = hasil.success;
+                        var message = hasil.message;
+                        if (success == true) {
+                            $('#form-cancel').get(0).reset()
+                            $('#modal-cancel').modal('hide');
+
+                            Swal.fire({
+                                title: 'Sukses',
+                                animation: true,
+                                text: message,
+                                type: "success",
+                            }).then(function() {
+                                load_data();
+                            });
+
+                            //load_data();
+
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal',
+                                animation: true,
+                                text: message,
+                                type: "error",
+                            });
+                        }
+                    }
+                });
+
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
         });
 
         function load_jadwal() {
             $.ajax({
                 url: "api/option/getJadwal.php",
                 method: "GET",
-                // data: {
-                //     status: '1',
-                //     // key: key,
-                // },
-                beforeSend: function() {
-                    //$("#loader").show();
-                },
-
                 success: function(data) {
                     //$("#loader").hide();
                     var object = JSON.parse(data);
@@ -402,25 +589,23 @@
 
                         var data = object.data;
                         var no = 1;
-                        var htmls='';
-
+                        var htmls = '';
+                        htmls += '<option selected disabled>Pilih Waktu</option>'
                         for (var count = 0; count < data.length; count++) {
-                            
+                            htmls += '<option value="' + data[count].timeReal + '">' + data[count].timeDisplay + '</option>'
                         }
 
-                        //$("#dataOrder").html(htmls);
+                        $("#waktuUbahJadwal").html(htmls);
                     } else {
-                        //htmls += `<h4>Data tidak ditemukan  </h4>`;
-                        //$("#dataOrder").html(htmls);
+                        htmls += '<option selected disabled>Data Tidak Ditemukan</option>'
+                        $("#waktuUbahJadwal").html(htmls);
                     }
 
                 }
             })
         }
 
-
-
-        $('#modal-order').on('hidden.bs.modal', function(e) {
+        $('#modal-confirm').on('hidden.bs.modal', function(e) {
             $(this)
                 .find("input,textarea,select")
                 .val('')
@@ -430,6 +615,15 @@
                 .end();
         })
 
+        $('#modal-cancel').on('hidden.bs.modal', function(e) {
+            $(this)
+                .find("input,textarea,select")
+                .val('')
+                .end()
+                .find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "")
+                .end();
+        })
 
 
         /* var key = '';

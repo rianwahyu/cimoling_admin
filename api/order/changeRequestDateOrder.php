@@ -14,7 +14,7 @@ $timeOrderChange = $_POST['timeOrderChange'];
 $reasonChangeDate = $_POST['reasonChangeDate'];
 
 $query = "";
-
+$query = $query . "UPDATE booking SET tanggalOrder='$dateOrderChange', waktuOrder='$timeOrderChange'  WHERE orderID='$orderID'; ";
 $query = $query . "INSERT INTO `bookingValue`(`orderID`, `keterangan`, `status`, `tanggalValue`, `userAdmin`) VALUES ('$orderID', 'Admin mengubah Jadwal Layanan dari tanggal $dateOrderBefore waktu $timeOrderBefore, dirubah ke tanggal $dateOrderChange waktu $timeOrderChange dikarenakan $reasonChangeDate' , '1', NOW(), '$userAdmin'); ";
 
 //echo $query;

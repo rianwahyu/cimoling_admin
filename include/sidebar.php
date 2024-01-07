@@ -19,7 +19,7 @@
         <img src="<?php echo $fileFoto ?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block"> <?= $fullname ?></a>
+        <a href="#" class="d-block"> <?= $namaLengkap ?></a>
       </div>
     </div>
 
@@ -45,42 +45,42 @@
           </a>
           <ul class="nav nav-treeview active">
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+              <a href="order_pending" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Masuk</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+              <a href="order_process" class="nav-link <?= ($subPage == "orderProcess") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Proses</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+              <a href="#" class="nav-link <?= ($subPage == "orderConfirm") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Konfirmasi</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+              <a href="#" class="nav-link <?= ($subPage == "orderDelivery") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Perjalanan</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderPending") ? 'active' : '' ?>">
+              <a href="#" class="nav-link <?= ($subPage == "orderSuccess") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Selesai</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="promosi_notifikasi" class="nav-link <?= ($subPage == "promosiNotifikasi") ? 'active' : '' ?>">
+              <a href="#" class="nav-link <?= ($subPage == "orderCancel") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Dibatalkan</p>
               </a>

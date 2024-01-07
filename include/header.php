@@ -11,10 +11,11 @@ if ($_SESSION['login'] != "login") {
     header("location:sign?message=not_yet");
 }
 
-$username =  $_SESSION['username'];
-$fullname =  $_SESSION['fullname'];
-$idUser   =  $_SESSION['idUser'];
+$idAdmin =  $_SESSION['idAdmin'];
+$namaLengkap =  $_SESSION['namaLengkap'];
 $role     =  $_SESSION['role'];
+
+//echo $idAdmin;
 
 
 /* $queryFoto = "SELECT foto FROM users WHERE username='$username'";

@@ -9,7 +9,7 @@
         <!-- Main Sidebar Container -->
         <?php
         $page = "order";
-        $subPage = "orderIn";
+        $subPage = "orderPending";
         include 'include/sidebar.php'; ?>
 
 
@@ -57,7 +57,7 @@
 
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body table-responsive" id="dataKategori">
+                                <div class="card-body table-responsive" id="dataOrder">
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -82,45 +82,32 @@
     </div>
     <!-- ./wrapper -->
 
-    <div class="modal fade" id="modal-kategori">
+    <div class="modal fade" id="modal-order">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="titleForm">Form Tambah Kategori</h4>
+                    <h4 class="modal-title" id="titleForm">Proses Order</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="overlay" style="display: none" id="overlayKategori">
+                <div class="overlay" style="display: none" id="overlayOrder">
                     <i class="fas fa-2x fa-sync fa-spin"></i>
                 </div>
-                <form role="form" action="" id="form-kategori" name="form-kategori" method="POST">
+                <form role="form" action="" id="form-order" name="form-order" method="POST">
 
                     <div class="modal-body">
 
-                        <input type="hidden" class="form-control" id="postType" name="postType" value="add">
-                        <input type="hidden" class="form-control" id="idKategori" name="idKategori">
+                        <!-- <input type="hidden" class="form-control" id="postType" name="postType" value="add"> -->
+                        <input type="hidden" class="form-control" id="orderID" name="orderID">
 
-                        <div class="form-group">
-                            <label for="foodName">Nama Kategori</label>
-                            <input type="text" class="form-control" id="namaKategori" name="namaKategori">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="foodName">Deskripsi Kategori</label>
-                            <input type="text" class="form-control" id="deskripsiKategori" name="deskripsiKategori">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="foodName">Gambar Kategori</label>
-                            <input type="file" class="form-control" id="fileUpload" name="fileUpload">
-                        </div>
+                        <h3>Apakah anda ingin memproses Order terpilih ?</h3>
 
                     </div>
 
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batalkan</button>
+                        <button class="btn btn-primary">Ya</button>
                     </div>
                 </form>
             </div>
@@ -132,14 +119,17 @@
 
     <!-- Page specific script -->
     <script text="text/javascript">
+        var idAdmin = "<?php echo $idAdmin ?>";
+
         load_data();
 
-        function load_data(key) {
+
+        function load_data() {
             $.ajax({
-                url: "api/category/getCategory.php",
-                method: "POST",
+                url: "api/order/getOrderByStatus.php",
+                method: "GET",
                 data: {
-                    // postType: 'getData',
+                    status: '0',
                     // key: key,
                 },
                 beforeSend: function() {
@@ -156,13 +146,16 @@
                     var success = object.success;
 
                     if (success == true) {
-                        htmls += `<table class="table table-bordered table-sm table-striped p-10">
+                        htmls += `<table class="table table-bordered table-sm table-striped p-0">
                     <thead>
                         <tr class="">
-                            <th class="text-center">NO</th>
-                            <th class="text-center">Nama Kategori</th>
-                            <th class="text-center">Deskripsi</th>
-                            <th class="text-center">Gambar</th>
+                            <th class="text-center">Order ID</th>
+                            <th class="text-center">Nama Member</th>
+                            <th class="text-center">Kategori</th>
+                            <th class="text-center">Layanan</th>
+                            <th class="text-center">Jadwal Permintaan</th>
+                            <th class="text-center">Alamat Permintaan Cuci</th>
+                            <th class="text-center">Biaya Layanan</th>
                             <th class="text-center">Opsi</th>
                         </tr>
                     </thead>
@@ -170,76 +163,64 @@
 
                         var data = object.data;
                         var no = 1;
-                        var img = "";
-                        var btnStatus = '';
-                        for (var count = 0; count < data.length; count++) {
-                            //var imageKategori = "storage/" + data[count].foto;
-                            var imageUrl = '<img src="' + data[count].foto + '" style="width : 60px;" />';
 
-                            if (data[count].status == "active") {
-                                btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + '" data-remark="Sembunyikan menu" data-status="nonActive" class="btn btn-info btn-sm">Sembunyikan<a/>';
-                            } else {
-                                btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + ' data-remark="Tampilkan menu" data-status="active" class="btn btn-info btn-sm">Tampilkan<a/>';
-                            }
+                        for (var count = 0; count < data.length; count++) {
+
                             htmls += '<tr>';
-                            htmls += '<td>' + no + '</td>';
-                            htmls += '<td>' + data[count].namaKategori + '</td>';
-                            htmls += '<td>' + data[count].deskripsiKategori + '</td>';
-                            htmls += '<td class="text-center">' + imageUrl + '</td>';
-                            htmls += '<td class="text-left"><a href="#" id="edit" data-toggle="modal" data-target="#modal-kategori" data-id_kategori="' + data[count].idKategori + '"  data-nama_kategori="' + data[count].namaKategori + '" data-deskripsi_kategori="' + data[count].deskripsiKategori + '" class="btn btn-primary btn-sm">Edit</a> ' + btnStatus + '  </td>';
+                            htmls += '<td>' + data[count].orderID + '</td>';
+                            htmls += '<td>' + data[count].namaLengkap + '</td>';
+                            htmls += '<td>' + data[count].tipeKendaraan + '</td>';
+                            htmls += '<td>' + data[count].namaJenis + '-' + data[count].ketHarga + '</td>';
+                            htmls += '<td>' + data[count].tanggalOrder + ' ' + data[count].waktuOrder + '</td>';
+                            htmls += '<td class="text-wrap">' + data[count].alamatOrder + '</td>';
+                            htmls += '<td>' + data[count].harga + '</td>';
+
+                            htmls += '<td class="text-left"><a href="#" id="edit" data-toggle="modal" data-target="#modal-order" data-order_id="' + data[count].orderID + '" class="btn btn-info btn-sm">Proses Order</a> </td>';
+
                             htmls += '</tr>';
                             no++;
                         }
 
                         htmls += `</tbody>
                   </table>`;
-                        $("#dataKategori").html(htmls);
+                        $("#dataOrder").html(htmls);
                     } else {
                         htmls += `<h4>Data tidak ditemukan  </h4>`;
-                        $("#dataKategori").html(htmls);
+                        $("#dataOrder").html(htmls);
                     }
 
                 }
             })
         }
 
-        $('#form-kategori').validate({
+        $('#form-order').validate({
             rules: {
-                namaKategori: {
-                    required: true,
-                },
-                deskripsiKategori: {
-                    required: true,
-                },
+                // namaKategori: {
+                //     required: true,
+                // },
+                // deskripsiKategori: {
+                //     required: true,
+                // },
             },
             messages: {
-                namaKategori: {
-                    required: "Mohon mengisi nama kategori",
-                },
+                // namaKategori: {
+                //     required: "Mohon mengisi nama kategori",
+                // },
 
-                deskripsiKategori: {
-                    required: "Mohon mengisi nama deskripsi kategori",
-                },
+                // deskripsiKategori: {
+                //     required: "Mohon mengisi nama deskripsi kategori",
+                // },
 
             },
             submitHandler: function() {
-                var username = "<?php echo $username ?>";
                 let formData = new FormData();
-                var fileUpload = $('#fileUpload').prop('files')[0];
-                formData.append('fileUpload', fileUpload);
-                formData.append('namaKategori', $('#namaKategori').val());
-                formData.append('deskripsiKategori', $('#deskripsiKategori').val());
-                formData.append('idKategori', $('#idKategori').val());
-                formData.append('postType', $('#postType').val());
-                formData.append('username', username);
 
-                var urls = '';
+                formData.append('orderID', $('#orderID').val());
+                formData.append('username', idAdmin);
+                formData.append('status', "0");
 
-                if ($('#postType').val() == "add") {
-                    urls = "api/category/addCategory.php";
-                } else if ($('#postType').val() == "update") {
-                    urls = "api/category/updateCategory.php";
-                }
+                var urls = 'api/order/updateOrderAdmin.php';
+
                 $.ajax({
                     url: urls,
                     type: "POST",
@@ -256,9 +237,19 @@
                         var success = hasil.success;
                         var message = hasil.message;
                         if (success == true) {
-                            $('#form-kategori').get(0).reset()
-                            $('#modal-kategori').modal('hide');
-                            load_data();
+                            $('#form-order').get(0).reset()
+                            $('#modal-order').modal('hide');
+
+                            Swal.fire({
+                                title: 'Sukses',
+                                animation: true,
+                                text: message,
+                                type: "success",
+                            }).then(function() {
+                                load_data();
+                            });
+
+                            //load_data();
 
                         } else {
                             Swal.fire({
@@ -288,19 +279,12 @@
 
         $(document).on('click', '#edit', function(e) {
             e.preventDefault();
-            var id_kategori = $(this).data('id_kategori');
-            var nama_kategori = $(this).data('nama_kategori');
-            var deskripsi_kategori = $(this).data('deskripsi_kategori');
-            //$('#materialID').prop('readonly', true);
-            $('#postType').val("update");
-            $('#idKategori').val(id_kategori);
-            $('#namaKategori').val(nama_kategori);
-            $('#deskripsiKategori').val(deskripsi_kategori);
-            $("#titleForm").html('Form Edit Kategori');
+            var order_id = $(this).data('order_id');
+            $('#orderID').val(order_id);
 
         });
 
-        $('#modal-kategori').on('hidden.bs.modal', function(e) {
+        $('#modal-order').on('hidden.bs.modal', function(e) {
             $(this)
                 .find("input,textarea,select")
                 .val('')
@@ -310,53 +294,7 @@
                 .end();
         })
 
-        $(document).on('click', '#showStatus', function(e) {
-            e.preventDefault();
-            var id_kategori = $(this).data('id_kategori');
-            var nama_kategori = $(this).data('nama_kategori');
-            var status = $(this).data('status');
-            var remark = $(this).data('remark');
-            Swal.fire({
-                title: remark,
-                text: "Apakah anda ingin " + remark + " " + nama_kategori + " ?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "api/category/updateStatus.php",
-                        type: "POST",
-                        data: {
-                            idKategori: id_kategori,
-                            status: status,
-                        },
 
-                        beforeSend: function() {
-                            $('#loader').show();
-                        },
-                        success: function(result) {
-                            $('#loader').hide();
-
-                            Swal.fire(
-                                'Berhasil!',
-                                'Ubah Data Berhasil',
-                                'success'
-                            )
-                            load_data();
-
-                        }
-                    });
-                }
-            })
-        });
-
-        $(document).on('click', '#btnTambah', function(e) {
-            $("#titleForm").html('Form Tambah Kategori');
-            $('#postType').val("add");
-        });
 
         /* var key = '';
         $(document).on('click', '#btnSearch', function(e) {

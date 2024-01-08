@@ -14,6 +14,7 @@ $msg = array(
     "nama_aplikasi" => $row['nama_aplikasi'],
     "nama_singkat" => $row['nama_singkat'],
     "logo_aplikasi" => $row['logo_aplikasi'],
+    "link_kebijakan_privasi" => $row['link_kebijakan_privasi'],
     "link_fb" => $row['link_fb'],
     "link_ig" => $row['link_ig'],
     "link_twitter" => $row['link_twitter'],

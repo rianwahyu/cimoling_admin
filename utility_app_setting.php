@@ -97,6 +97,11 @@
 
 
                                         <div class="form-group">
+                                            <label for="">Link Kebijakan Privasi</label>
+                                            <input type="text" class="form-control" id="link_kebijakan_privasi" name="link_kebijakan_privasi">
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="">Tentang Aplikasi</label>
                                             <textarea id="about" name="about" class="ml-10 mr-10"></textarea>
                                         </div>
@@ -204,15 +209,16 @@
                 success: function(result) {
                     var hasil = JSON.parse(result);
                     console.log(hasil.hasil);
+                    $("#link_kebijakan_privasi").val(hasil.link_kebijakan_privasi);
                     $("#about").summernote('code', hasil.about);
-                    $("#nama_aplikasi").val(hasil.nama_aplikasi)
+                    $("#nama_aplikasi").val(hasil.nama_aplikasi);
                     $("#nama_singkat").val(hasil.nama_singkat);
                     $("#link_fb").val(hasil.link_fb);
                     $("#link_ig").val(hasil.link_ig);
                     $("#link_twitter").val(hasil.link_twitter);
                     $("#link_tiktok").val(hasil.link_tiktok);
                     $("#subtitle_aplikasi").val(hasil.subtitle_aplikasi);
-                    
+
                     var logo_aplikasi = hasil.logo_aplikasi;
 
                     if (logo_aplikasi == "") {
@@ -256,6 +262,7 @@
             const img_background_home = $('#background_home').prop('files')[0]; */
 
             let formData = new FormData();
+            formData.append('link_kebijakan_privasi', $("#link_kebijakan_privasi").val());
             formData.append('about', $("#about").val());
             formData.append('nama_aplikasi', $("#nama_aplikasi").val());
             formData.append('nama_singkat', $("#nama_singkat").val());
@@ -263,7 +270,7 @@
             formData.append('link_fb', $("#link_fb").val());
             formData.append('link_ig', $("#link_ig").val());
             formData.append('link_twitter', $("#link_twitter").val());
-            formData.append('link_linkedin', $("#link_linkedin").val());
+            formData.append('link_tiktok', $("#link_tiktok").val());
 
             /* formData.append('logo_aplikasi', img_logo_aplikasi);
             formData.append('background_home', img_background_home); */

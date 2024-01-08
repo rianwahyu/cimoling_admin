@@ -9,6 +9,7 @@ $link_fb  = $_POST['link_fb'];
 $link_ig  = $_POST['link_ig'];
 $link_twitter  = $_POST['link_twitter'];
 $link_tiktok  = $_POST['link_tiktok'];
+$link_kebijakan_privasi  = $_POST['link_kebijakan_privasi'];
 
 $subtitle_aplikasi  = $_POST['subtitle_aplikasi'];
 
@@ -61,7 +62,7 @@ if (!empty($background_home)) {
 
 
 
-$query = "UPDATE setting_apps SET about='$about', nama_aplikasi='$nama_aplikasi', nama_singkat='$nama_singkat', $updateLogoQuery  link_fb='$link_fb', link_ig='$link_ig', link_twitter='$link_twitter', link_tiktok='$link_tiktok' $updateBackgroundQuery , subtitle_aplikasi='$subtitle_aplikasi' WHERE id='1'";
+$query = "UPDATE setting_apps SET about='$about', nama_aplikasi='$nama_aplikasi', nama_singkat='$nama_singkat', $updateLogoQuery  link_fb='$link_fb', link_ig='$link_ig', link_twitter='$link_twitter', link_tiktok='$link_tiktok', link_kebijakan_privasi='$link_kebijakan_privasi' $updateBackgroundQuery , subtitle_aplikasi='$subtitle_aplikasi' WHERE id='1'";
 
 //echo $query;
 

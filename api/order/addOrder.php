@@ -18,7 +18,7 @@ if (mysqli_num_rows($res) < 1) {
 //echo $orderID;
 
 $userID = $_POST['userID'];
-$tipeKendaraan = $_POST['tipeKendaraan'];
+$idPembayaran = $_POST['idPembayaran'];
 $idKategori = $_POST['idKategori'];
 $idJenis = $_POST['idJenis'];
 $idHarga = $_POST['idHarga'];
@@ -33,10 +33,12 @@ $waktuOrder = $_POST['waktuOrder'];
 
 $orderID = getOrderID($dbc);
 $curDate = date('Y-m-d h:i:s');
+$curYear = date('y');
+$curMonth = date('m');
 
 $query = "";
-$query = $query . " INSERT INTO `booking`(`orderID`, `userID`, `tipeKendaraan`, `idKategori`, `idJenis`, `idHarga`, `alamatOrder`, `latitude`, `longitude`, `tanggalOrder`, `waktuOrder`, `statusOrder`) 
-VALUES ('$orderID', '$userID', '$tipeKendaraan', '$idKategori', '$idJenis', '$idHarga', '$alamatOrder', '$latitude', '$longitude', '$tglOrder', '$waktuOrder', '0') ;";
+$query = $query . " INSERT INTO `booking`(`orderID`, `userID`, `idPembayaran`, `idKategori`, `idJenis`, `idHarga`, `alamatOrder`, `latitude`, `longitude`, `tanggalOrder`, `waktuOrder`, `statusOrder`, year, month) 
+VALUES ('$orderID', '$userID', '$idPembayaran', '$idKategori', '$idJenis', '$idHarga', '$alamatOrder', '$latitude', '$longitude', '$tglOrder', '$waktuOrder', '0', '$curYear', '$curMonth') ;";
 
 $query = $query . " INSERT INTO `bookingValue`( `orderID`, `keterangan`, `status`, `tanggalValue`, `userAdmin`) VALUES ('$orderID', 'Pesanan telah dibuat', '0', '$curDate', '' ) ;";
 
@@ -58,17 +60,19 @@ die(json_encode($response));
 
 function getOrderID($dbc)
 {
+    $curYear = date('y');
+    $curMonth = date('m');
     $kode = "CML";
     $orderID = "";
-    $sql = "SELECT orderID  FROM booking ORDER BY orderID DESC LIMIT 1 ";
+    $sql = "SELECT orderID  FROM booking WHERE year='$curYear' AND month='$curMonth' ORDER BY orderID DESC LIMIT 1 ";
     $res  = mysqli_query($dbc, $sql);
     $data = mysqli_fetch_assoc($res);
     if (mysqli_num_rows($res) < 1) {
-        $orderID = $kode . "0000001";
+        $orderID = $kode . $curYear . $curMonth . "001";
     } else {
         $id = $data["orderID"];
-        $id = substr($id, 3);
-        $orderID = $kode . str_pad($id + 1, 7, 0, STR_PAD_LEFT);
+        $id = substr($id, 7);
+        $orderID = $kode . $curYear . $curMonth . str_pad($id + 1, 3, 0, STR_PAD_LEFT);
     }
 
     return $orderID;

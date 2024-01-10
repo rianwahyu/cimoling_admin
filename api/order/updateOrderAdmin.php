@@ -24,6 +24,24 @@ if ($status == "0") {
         $query = $query . "UPDATE booking SET statusOrder='$statusOrderTo' WHERE orderID='$orderID'; ";
         $query = $query . "INSERT INTO `bookingValue`(`orderID`, `keterangan`, `status`, `tanggalValue`, `userAdmin`) VALUES ('$orderID', 'Admin Cimoling membatalkan order dikarenakan $reasonCancel', '$statusOrderTo', NOW(), '$userAdmin'); ";
     }
+} elseif ($status == "2") {
+    if ($_POST['idKaryawan'] == '') {
+    } else {
+        $statusOrderTo = 3;
+        $idKaryawan = $_POST['idKaryawan'];
+
+        $i = 0;
+
+        foreach ($idKaryawan as $val) {
+            $query = $query . "INSERT INTO `delivery_cuci_person`(`orderID`, `idKaryawan`, `dateCreated`, `_by`) VALUES ('$orderID','$val',NOW(),'$userAdmin') ON DUPLICATE KEY UPDATE dateCreated=values(dateCreated), _by=values(_by); ";
+            $i++;
+        }
+
+        $query = $query . "UPDATE booking SET statusOrder='$statusOrderTo' WHERE orderID='$orderID'; ";
+        $query = $query . "INSERT INTO `bookingValue` (`orderID`, `keterangan`, `status`, `tanggalValue`, `userAdmin`) VALUES ('$orderID', 'Order Anda telah di proses untuk perjalan ke tempat anda, mohon menunggu tim CIMOLING dalam perjalan ke tempat anda', '$statusOrderTo', NOW(), '$userAdmin'); ";
+
+        //echo $query;
+    }
 }
 
 if (mysqli_multi_query($dbc, $query)) {
@@ -46,6 +64,8 @@ if ($cumulative_rows > 0) {
         } elseif ($_POST['ketProses'] == "cancel") {
             $message = "Status Order berhasil di cancel dan dialihkan ke menu Order Dibatalkan";
         }
+    } elseif ($status == "2") {
+        $message = "Order berhasil di setting ke status PERJALANAN";
     }
     $response = array(
         "success" => true,

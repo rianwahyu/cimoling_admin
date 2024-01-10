@@ -59,7 +59,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderConfirm") ? 'active' : '' ?>">
+              <a href="order_confirm" class="nav-link <?= ($subPage == "orderConfirm") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Konfirmasi</p>
               </a>

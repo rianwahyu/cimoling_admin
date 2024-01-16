@@ -66,14 +66,14 @@
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderDelivery") ? 'active' : '' ?>">
+              <a href="order_delivery" class="nav-link <?= ($subPage == "orderDelivery") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Perjalanan</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link <?= ($subPage == "orderSuccess") ? 'active' : '' ?>">
+              <a href="order_finish" class="nav-link <?= ($subPage == "orderFinish") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Order Selesai</p>
               </a>

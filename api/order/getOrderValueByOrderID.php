@@ -4,7 +4,9 @@ include '../../config/connection.php';
 
 $orderID = $_POST['orderID'];
 
-$query = "SELECT *, DATE_FORMAT(tanggalValue, '%Y-%m-%d') as convTanggal, DATE_FORMAT(tanggalValue, '%T') as convTime FROM `bookingValue` WHERE `orderID`='$orderID' ORDER BY tanggalValue ASC ";
+$query = "SELECT *, DATE_FORMAT(tanggalValue, '%Y-%m-%d') as convTanggal, DATE_FORMAT(tanggalValue, '%T') as convTime 
+FROM `bookingValue` 
+WHERE `orderID`='$orderID' ORDER BY tanggalValue ASC ";
 $result = mysqli_query($dbc, $query);
 if (mysqli_num_rows($result) > 0) {
     while ($data = mysqli_fetch_assoc($result)) {

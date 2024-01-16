@@ -42,6 +42,11 @@ if ($status == "0") {
 
         //echo $query;
     }
+} elseif ($status == "3") {
+    $statusOrderTo = 4;
+
+    $query = $query . "UPDATE booking SET statusOrder='$statusOrderTo', statusPembayaran='Lunas' WHERE orderID='$orderID'; ";
+    $query = $query . "INSERT INTO `bookingValue` (`orderID`, `keterangan`, `status`, `tanggalValue`, `userAdmin`) VALUES ('$orderID', 'Order Layanan Cimoling telah selesai, Terima kasih telah menggunakan layanan Cimoling ', '$statusOrderTo', NOW(), '$userAdmin'); ";
 }
 
 if (mysqli_multi_query($dbc, $query)) {
@@ -66,6 +71,8 @@ if ($cumulative_rows > 0) {
         }
     } elseif ($status == "2") {
         $message = "Order berhasil di setting ke status PERJALANAN";
+    }elseif ($status == "3") {
+        $message = "Order Layanan Cimoling telah Selesai";
     }
     $response = array(
         "success" => true,

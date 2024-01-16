@@ -31,7 +31,6 @@ if ($status != '5') {
 }
 
 
-
 //echo $query;
 
 $result = mysqli_query($dbc, $query);

@@ -143,6 +143,13 @@
                 <p>Notifikasi</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="promosi_kupon" class="nav-link <?= ($subPage == "promosiCoupon") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Kupon Promo Harga</p>
+              </a>
+            </li>
           </ul>
         </li>
 

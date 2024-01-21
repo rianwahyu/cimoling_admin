@@ -163,6 +163,13 @@
           </a>
           <ul class="nav nav-treeview active">
             <li class="nav-item">
+              <a href="utility_whatsapp" class="nav-link <?= ($subPage == "utilityWhatsapp") ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Whatsapp Admin</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
               <a href="utility_app_setting" class="nav-link <?= ($subPage == "utilityAboutApps") ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Tentang Aplikasi</p>

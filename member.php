@@ -103,6 +103,7 @@
             <thead>
                 <tr class="">
                     <th class="text-center">No</th>
+                    <th class="text-center">Foto</th>
                     <th class="text-center">Nama Lengkap</th>
                     <th class="text-center">Email</th>
                     <th class="text-center">Nomor Handphone</th>
@@ -117,16 +118,24 @@
             var img = "";
             var btnStatus = '';
             for (var count = 0; count < data.length; count++) {
-              //var imageKategori = "storage/" + data[count].foto;
-              // var imageUrl = '<img src="' + data[count].foto + '" style="width : 60px;" />';
+              var imageFoto = "";
+              if (data[count].fotoUrl == "") {
+                imageFoto = "storage/profile/default.png";
+              } else {
+                imageFoto = "storage/profile/" + data[count].fotoUrl;
+              }
+
+              var imageUrl = '<img class="img-thumbnail" src="' + imageFoto + '" style="width : 80px;" />';
 
               // if (data[count].status == "active") {
               //   btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + '" data-remark="Sembunyikan menu" data-status="nonActive" class="btn btn-info btn-sm">Sembunyikan<a/>';
               // } else {
               //   btnStatus = '<a href="#" id="showStatus" data-id_kategori="' + data[count].idKategori + '" data-nama_kategori="' + data[count].namaKategori + ' data-remark="Tampilkan menu" data-status="active" class="btn btn-info btn-sm">Tampilkan<a/>';
               // }
+
               htmls += '<tr>';
               htmls += '<td>' + no + '</td>';
+              htmls += '<td class="text-center">' + imageUrl + '</td>';
               htmls += '<td>' + data[count].namaLengkap + '</td>';
               htmls += '<td>' + data[count].email + '</td>';
               htmls += '<td>' + data[count].noHp + '</td>';

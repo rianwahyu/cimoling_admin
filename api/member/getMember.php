@@ -2,7 +2,7 @@
 
 include '../../config/connection.php';
 
-$query = "SELECT `idMember`, `namaLengkap`, `alamat`, `noHp`, `email`, `password`, `token`, `tanggalRegistrasi` FROM `member` WHERE 1 ";
+$query = "SELECT `idMember`, `namaLengkap`, fotoUrl, `alamat`, `noHp`, `email`, `password`, `token`, `tanggalRegistrasi` FROM `member` WHERE 1 ";
 $result = mysqli_query($dbc, $query);
 if(mysqli_num_rows($result) > 0){
     while ($data = mysqli_fetch_assoc($result)) {
